@@ -15,15 +15,19 @@
   --color-gridline: #eee;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;1,400&family=DM+Mono:wght@400;500&display=swap');
+body {
+  margin: 0 auto;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;1,400&family=DM+Mono:wght@400;500&family=Barlow+Condensed:wght@400;500&display=swap');
 /* Headlines & pull quotes */
-h1, h2, h3, .pull-quote {
+h1, h2, h3, h4, .pull-quote {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
 h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 600; line-height: 1.15; }
 h2 { font-size: 22px; font-weight: 400; font-style: italic; line-height: 1.4; }
+h4 {font-size: 14px; font-weight: 400; font-style:italic; line-height: 1.3;}
 
 .pull-quote {
   font-size: 20px;
@@ -68,8 +72,6 @@ p.card {
 }
 
 
-body { font-family: sans-serif; }
-
 main {
   width: 100%;
   margin: 0 auto;
@@ -97,6 +99,7 @@ main {
 .chart-wrapper {
   width: 90%;
   max-width: 1400px;
+  display:block;
 }
 
 
@@ -345,23 +348,13 @@ main {
 }
 
 
-#frame-label { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-subtext); margin-bottom: 4px; }
-#frame-title { font-size: 22px; font-weight: 600; line-height: 1.3; margin-bottom: 1rem; }
-#annotation  { border-left: 3px solid #378ADD; padding: 10px 14px; background: #f7f7f7; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.55; color: var(--color-subtext); margin-bottom: 1.5rem; transition: border-color 500ms ease; }
-
-.axis text   { font-size: 14px; fill: var(--color-subtext); font-family: var(--font-body); }
-.axis .domain { display: none; }
-.axis .tick line { stroke: var(--color-gridline); }
-.bar-label   { font-size: 14px; fill: var(--color-subtext); text-anchor: middle; pointer-events: none; }
-
-#legend      { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 14px; font-size: 12px; color: var(--color-subtext); }
-.legend-item { display: flex; align-items: center; gap: 6px; }
-.legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-    #step-label  { font-size: 12px; color: var(--color-subtext); }
-    #loading     { font-size: 13px; color: var(--color-subtext); padding: 2rem 0; }
-
-
+.layout-70-30 {
+  display: flex;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  flex:1;
+}
 
 
 .layout-50-50 {
@@ -382,11 +375,11 @@ main {
 
 
 .layout-70-30 .steps {
-  width: 25%; 
+  width: 35%; 
 }
 
 .layout-70-30 .sticky-container {
-  width: 70%; 
+  width: 60%; 
 }
 
 
@@ -454,6 +447,7 @@ main {
   flex-direction:column;
   padding:0px;
   margin:0px;
+  width:100%;
 }
 
 .chart-caption p {

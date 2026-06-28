@@ -48,7 +48,7 @@
       "type": "loss"
     },
     {
-      "label": "Loss: $50,000 to 74,999",
+      "label": "Loss: $50,000 to $74,999",
       "value": 0.5,
       "count": 3,
       "type": "loss"
@@ -84,7 +84,7 @@
       "type": "profit"
     },
     {
-      "label": "Profit: $50,000 to 74,999",
+      "label": "Profit: $50,000 to $74,999",
       "value": 1,
       "count": 6,
       "type": "profit"
