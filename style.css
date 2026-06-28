@@ -212,6 +212,7 @@ main {
   align-items: center;
   justify-content: center;
   background: #fff;
+  overflow:visible;
   z-index: 1;
 }
 
@@ -460,4 +461,11 @@ main {
   line-height:1.2;
   margin-top:0.5rem;
 
+}
+
+.annotation {
+  font-size:16px;
+  color: #666;
+  font-style:italic;
+  font-family:'Playfair Display', Georgia, serif;
 }

@@ -9,7 +9,7 @@ const mlm_copy = {
   },
   mlm_step2: {
     label: d => `Among all participants (n=${d.nTotal})`,
-    title: 'How much did all participants report earning or losing',
+    title: 'How much did all participants report earning or losing?',
     annotation: d => `${d.pctUnder5kOfProfit}% of those who earned a profit made under $5,000`,
   },
 };
@@ -103,7 +103,7 @@ function drawStaticEpiChart(containerSelector, jsonPath) {
 
     // title / subtitle
     svg.append('text').attr('x', 0).attr('y', -40)
-  .attr('font-size', '28px').attr('font-weight', '700')
+  .attr('font-size', '20px').attr('font-weight', '700')
   .attr('fill', '#1a1a1a').attr('font-family', "'Playfair Display', Georgia, serif")
   .text('Productivity and Hourly Pay diverged sharply starting around 1980');
 
@@ -206,6 +206,7 @@ function drawIncomeChart(containerSelector, jsonPath) {
 // =========================================================================
 function initChart(containerId, copy) {
   const block    = document.getElementById(containerId);
+  console.log('block:', block);
   const svgEl    = block.querySelector('.chart-svg');
   const frameLabel = block.querySelector('.frame-label');
   const frameTitle = block.querySelector('.frame-title');
@@ -288,13 +289,13 @@ function initChart(containerId, copy) {
 
     labels.exit().transition().duration(dur).attr('opacity', 0).remove();
 
-    // x-axis (instant, no transition — avoids font flash)
-    gX.call(d3.axisBottom(x).tickSize(0).tickPadding(10))
+    gX.call(d3.axisBottom(x).tickSize(0).tickPadding(20))
       .call(ax => {
         ax.select('.domain').remove();
         ax.selectAll('.tick text')
           .attr('text-anchor', 'middle')
-          .style('font-size', '11px')
+          .style('font-size', '12px')
+          .style('font-weight', '600')
           .style('font-family', "'Barlow Condensed', sans-serif")
           .style('opacity', d => activeLabels.has(d) ? 1 : 0)
           .each(function(d) {
@@ -303,7 +304,7 @@ function initChart(containerId, copy) {
             const [type, amount] = normalized.split(': ');
             el.text('');
             el.append('tspan').attr('x', 0).attr('dy', '0').text(type);
-            el.append('tspan').attr('x', 0).attr('dy', '1.2em').attr('fill-opacity', 0.65).text(amount || '');
+            el.append('tspan').attr('x', 0).attr('dy', '1.4em').attr('fill-opacity', 0.65).text(amount || '');
           });
       });
   }
@@ -311,15 +312,16 @@ function initChart(containerId, copy) {
   const chartInstance = {
     meta: null,
     applyStep(stateName, stepData, shouldAnimate) {
-      if (!stepData) return;
-      const stepConfig = copy[stateName];
-      if (stepConfig && this.meta) {
-        frameTitle.textContent       = stepConfig.title;
-        annotation.textContent       = stepConfig.annotation(this.meta);
-        annotation.style.borderColor = stepConfig.accentColor;
-      }
-      draw(stepData, shouldAnimate, this.fullDomain);
-    },
+  if (!stepData) return;
+  const stepConfig = copy[stateName];
+  if (stepConfig && this.meta) {
+    // frameLabel.textContent = stepConfig.label(this.meta);  // ← delete this line
+    frameTitle.textContent       = stepConfig.title;
+    annotation.textContent       = stepConfig.annotation(this.meta);
+    annotation.style.borderColor = stepConfig.accentColor;
+  }
+  draw(stepData, shouldAnimate, this.fullDomain);
+},
     uiSetup() {
       loading.style.display = 'none';
       svgEl.style.display   = '';
