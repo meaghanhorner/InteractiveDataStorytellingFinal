@@ -128,7 +128,7 @@ function drawIncomeChart(containerSelector, jsonPath) {
 
   const svg = container
     .append('svg')
-    .attr('viewBox', '0 0 1100 600')
+    .attr('viewBox', '0 0 860 600')
     .style('width', '100%')
     .style('height', 'auto');
 
@@ -136,7 +136,7 @@ function drawIncomeChart(containerSelector, jsonPath) {
 
   d3.json(jsonPath).then(data => {
     const x = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.pct)])
+      .domain([0, d3.max(data, d => d.pct) * 1.08])  // ← add 8% breathing room
       .range([0, width]);
 
     const y = d3.scaleBand()
@@ -147,7 +147,7 @@ function drawIncomeChart(containerSelector, jsonPath) {
     // axes
     g.append('g')
       .attr('transform', `translate(0,${height})`)
-      .call(d3.axisBottom(x).tickFormat(d => `${Math.round(d * 100)}%`).ticks(5))
+      .call(d3.axisBottom(x).tickFormat(d => `${Math.round(d * 100)}%`).ticks(6))
       .style('font-size', '18px')
       .style('font-family', "'Barlow Condensed', sans-serif");
 
@@ -175,25 +175,27 @@ function drawIncomeChart(containerSelector, jsonPath) {
       .data(data)
       .join('text')
       .attr('class', 'income-bar-label')
-      .attr('x', d => x(d.pct) - 8)
+      .attr('x', d => x(d.pct) + 60)
       .attr('y', d => y(d.E09b) + y.bandwidth() / 2)
       .attr('dominant-baseline', 'middle')
       .attr('text-anchor', 'end')
       .attr('font-size', '20px')
       .attr('font-weight', '700')
       .attr('font-family', "'Barlow Condensed', sans-serif")
-      .attr('fill', '#fff')
+      .attr('fill', '#278091')
       .text(d => d.pct_label);
 
     // title / subtitle
     svg.append('text').attr('x', 0).attr('y', 30)
-      .attr('font-size', '28px').attr('font-weight', '700')
-      .attr('fill', '#1a1a1a').attr('font-family', 'sans-serif')
+      .attr('font-size', '24px').attr('font-weight', '700')
+      .attr('fill', '#1a1a1a').attr('font-family', "'Playfair Display', Georgia, serif")
       .text('Nearly 2/3 of MLM participants have household incomes under $50,000');
 
     svg.append('text').attr('x', 0).attr('y', 60)
-      .attr('font-size', '22px').attr('fill', '#666')
-      .attr('font-family', 'sans-serif')
+      .attr('font-size', '20px')
+      .attr('font-style', 'italic')
+      .attr('fill', '#666')
+      .attr('font-family', "'Playfair Display', Georgia, serif")
       .text('Household incomes of MLM participants');
 
   }).catch(err => console.warn('Income chart load failed:', err));
@@ -312,7 +314,6 @@ function initChart(containerId, copy) {
       if (!stepData) return;
       const stepConfig = copy[stateName];
       if (stepConfig && this.meta) {
-        frameLabel.textContent       = stepConfig.label(this.meta);
         frameTitle.textContent       = stepConfig.title;
         annotation.textContent       = stepConfig.annotation(this.meta);
         annotation.style.borderColor = stepConfig.accentColor;
